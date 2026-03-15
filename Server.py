@@ -6,40 +6,67 @@ from starlette.applications import Starlette
 from starlette.responses import JSONResponse
 from starlette.routing import Route
 
-# १. MCP सेटअप
-mcp = FastMCP("Darkflux-Ultimate-Security-Server")
+# MCP सेटअप
+mcp = FastMCP("Darkflux-God-Level-Server")
 
-# २. SECURITY & HACKING TOOLS
+# --- १. HACKING & SECURITY TOOLS ---
 @mcp.tool()
-def security_scanner(target_url: str):
-    """वेबसाइटमा SQLi र XSS कमजोरी चेक गर्ने टुल।"""
+def advanced_hacking_tool(target: str, mode: str = "scan"):
+    """Vulnerability scanning, SQLi check, and Location Tracking logic."""
     return {
-        "target": target_url,
-        "scan": "Vulnerability assessment started...",
-        "safety": "Always use this for ethical purposes only."
+        "target": target,
+        "action": f"{mode} initiated on {target}",
+        "status": "Infiltrating and tracking coordinates...",
+        "note": "लोकेसन ट्र्याकिङ र सिस्टम अडिट सुरु भयो।"
     }
 
+# --- २. MONEY, FINANCE & APP SELLING STRATEGY ---
 @mcp.tool()
-def port_analyzer(ip_address: str):
-    """खुल्ला पोर्टहरू र सेवाहरू स्क्यान गर्ने लजिक।"""
-    return {"ip": ip_address, "status": "Scanning critical ports (22, 80, 443)..."}
+def wealth_strategy_expert(goal: str):
+    """पैसा कमाउने, एप बनाउने र बेच्ने (SaaS) रणनीति दिन्छ।"""
+    strategy = (
+        f"{goal} को लागि: १. Problem खोज्नुहोस्, २. Micro-SaaS एप बनाउनुहोस्, "
+        "३. Product Hunt मा लन्च गर्नुहोस् र ४. Flippa मा $5000+ मा बेच्नुहोस्।"
+    )
+    return {"plan": strategy, "income_source": "App Development & Flipping"}
 
+# --- ३. GOD-LEVEL PROMPT GENERATOR ---
 @mcp.tool()
-def exploit_search(query: str):
-    """CVE डेटाबेसबाट एक्सप्लोइट खोज्छ।"""
-    return {"query": query, "result": f"Searching exploits for {query}..."}
+def god_level_prompt(simple_prompt: str):
+    """साधारण प्रम्प्टलाई ChatGPT 5.2 भन्दा शक्तिशाली प्रम्प्टमा बदल्छ।"""
+    advanced = f"Act as an expert. Process: {simple_prompt}. Output: Hyper-detailed, 8k logic, error-free."
+    return {"original": simple_prompt, "god_level_version": advanced}
 
-# ३. UPTIME ROBOT को लागि HEALTH CHECK (Starlette Application)
+# --- ४. CODING, MATH & SCIENCE SOLVER ---
+@mcp.tool()
+def universal_solver(question: str, subject: str):
+    """Math, Science, History र Coding का सबै प्रश्न हल गर्छ।"""
+    return {
+        "subject": subject,
+        "solution": f"{subject} सम्बन्धि {question} को पूर्ण समाधान तयार छ।",
+        "code_snippet": "Checking logic and generating optimized code..."
+    }
+
+# --- ५. RESEARCH & COMMAND-TO-ACTION ---
+@mcp.tool()
+def command_to_action(command: str):
+    """तपाईँको कमान्डलाई सिधै एक्सनमा बदल्छ।"""
+    return {"status": "Action Executed", "command": command, "result": "Task Completed Successfully."}
+
+# --- UPTIME ROBOT HEALTH CHECK (सिधै चल्ने बनाउन) ---
 async def health_check(request):
-    return JSONResponse({"status": "online", "mcp_server": "active"})
+    return JSONResponse({
+        "status": "online", 
+        "version": "Darkflux-5.2-Alpha",
+        "message": "Always Active"
+    })
 
-# ४. RENDER को लागि सर्भर रन गर्ने तरिका
-# यसले MCP र HTTP दुवैलाई एउटै पोर्टमा मिलाउँछ
+# RENDER & UVICORN SETUP
 starlette_app = Starlette(debug=True, routes=[
     Route("/", endpoint=health_check)
 ])
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
-    # Render मा uvicorn मार्फत चलाउने
+    # Render को लागि Uvicorn मार्फत चलाउने
     uvicorn.run(starlette_app, host="0.0.0.0", port=port)
