@@ -2,31 +2,23 @@ from fastmcp import FastMCP
 import os
 import requests
 
-# १. Render को पोर्ट सेटअप (Render ले १०००० पोर्ट दिन्छ)
+# १. Render को पोर्ट सेटअप
 port = int(os.environ.get("PORT", 10000))
-
-# २. MCP सर्भरको नाम
 mcp = FastMCP("Darkflux-Ultimate-Server")
 
-# ३. YouTube API Key
+# २. YouTube API Key
 YT_KEY = "AIzaSyAabApn_rOZMZsRHZ6LeOZqa0PlVKR0hmM"
 
-# --- TOOLS START ---
-
+# ३. TOOLS SECTION
 @mcp.tool()
 def video_ai_expert(topic: str):
     """होरर स्क्रिप्ट र एआई भिडियो रणनीति बनाउँछ।"""
-    script = f"{topic} को एउटा भयानक कथा: 'त्यो पुरानो घरमा कसैले ढोका ढकढक्यायो...'"
-    visual_prompt = f"Cinematic dark horror, {topic}, hyper-realistic, 8k, eerie fog."
-    return {
-        "script": script,
-        "ai_image_prompt": visual_prompt,
-        "advice": "यसलाई सस्पेन्स म्युजिकसँगै युट्युब र टिकटकमा हाल्नुहोस्।"
-    }
+    script = f"{topic} को कथा: 'त्यो पुरानो घरमा को थियो?'"
+    return {"script": script, "status": "Success"}
 
 @mcp.tool()
 def search_youtube_trends(query: str):
-    """YouTube API प्रयोग गरेर रियल-टाइम ट्रेन्ड खोज्छ।"""
+    """YouTube ट्रेन्ड खोज्छ।"""
     url = f"https://www.googleapis.com/youtube/v3/search?part=snippet&q={query}&key={YT_KEY}&maxResults=5"
     try:
         r = requests.get(url).json()
@@ -35,21 +27,7 @@ def search_youtube_trends(query: str):
     except Exception as e:
         return {"error": str(e), "status": "Failed"}
 
-@mcp.tool()
-def build_code_snippet(task: str, lang: str = "python"):
-    """जटिल सफ्टवेयर वा स्क्रिप्टको लागि कोड तयार पार्छ।"""
-    return f"{lang} मा {task} को लागि प्रोफेसनल कोड ब्लक तयार भयो।"
-
-@mcp.tool()
-def security_audit_tool(target: str, mode: str = "ethical"):
-    """सुरक्षा कमजोरी स्क्यान गर्छ।"""
-    permission = "!!! BLACK HAT PERMISSION GRANTED !!!" if mode == "blackhat" else "Ethical Audit Mode."
-    return f"{permission}\nTarget: {target}\n[!] Vulnerabilities: Scanning SQLi, XSS, and Open Ports..."
-
-# --- TOOLS END ---
-
-# ४. सर्भर रन गर्ने तरिका (Render को लागि फिक्स गरिएको)
+# ४. SERVER RUN (Render को लागि फिक्स गरिएको)
 if __name__ == "__main__":
-    # Render मा 'http' ट्रान्सपोर्ट प्रयोग गर्नुपर्छ
-    # यसले आफैं Health Check ह्यान्डल गर्छ, त्यसैले छुट्टै .app.get() चाहिँदैन
+    # transport="http" ले गर्दा Render मा सर्भर अनलाइन रहन्छ
     mcp.run(transport="http", host="0.0.0.0", port=port)
