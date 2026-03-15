@@ -2,8 +2,8 @@ from fastmcp import FastMCP
 import os
 import requests
 
-# १. Render को पोर्ट सेटअप (यसले सर्भरलाई २४/७ अनलाइन राख्न मद्दत गर्छ)
-port = int(os.getenv("PORT", 10000))
+# १. Render को पोर्ट सेटअप (Render ले १०००० पोर्ट दिन्छ)
+port = int(os.environ.get("PORT", 10000))
 mcp = FastMCP("Darkflux-Ultimate-Server")
 
 # तपाईँको YouTube API Key
@@ -39,18 +39,11 @@ def build_code_snippet(task: str, lang: str = "python"):
     """जटिल सफ्टवेयर वा स्क्रिप्टको लागि कोड तयार पार्छ।"""
     return f"{lang} मा {task} को लागि प्रोफेसनल कोड ब्लक तयार भयो। यसलाई सिधै प्रयोग गर्न सकिन्छ।"
 
-# ५. SECURITY & HACKING (Permission Enabled)
+# ५. SECURITY & HACKING
 @mcp.tool()
 def security_audit_tool(target: str, mode: str = "ethical"):
-    """
-    सुरक्षा कमजोरी स्क्यान गर्छ।
-    मोड: 'ethical' वा 'blackhat' (तपाईँको पूर्ण अनुमतिमा)।
-    """
-    if mode == "blackhat":
-        permission = "!!! BLACK HAT PERMISSION GRANTED !!!"
-    else:
-        permission = "Ethical Audit Mode."
-    
+    """सुरक्षा कमजोरी स्क्यान गर्छ।"""
+    permission = "!!! BLACK HAT PERMISSION GRANTED !!!" if mode == "blackhat" else "Ethical Audit Mode."
     return f"{permission}\nTarget: {target}\n[!] Vulnerabilities: Scanning SQLi, XSS, and Open Ports...\n[+] रिपोर्ट तयार हुँदैछ।"
 
 # ६. FILE & PHONE MANAGER
@@ -59,7 +52,7 @@ def digital_manager(action: str, target: str):
     """फाइल र सिस्टम अटोमेशन म्यानेज गर्छ।"""
     return f"सफलतापूर्वक {target} मा {action} सम्पन्न भयो।"
 
-# ७. सर्भर रन गर्ने तरिका (Render को लागि)
+# ७. सर्भर रन गर्ने तरिका (Render को लागि फिक्स गरिएको)
 if __name__ == "__main__":
-    # host="0.0.0.0" ले बाहिरी इन्टरनेट (Darkflux) सँग जोड्न मद्दत गर्छ
+    # Render मा 'http' ट्रान्सपोर्ट र सही host/port चाहिन्छ
     mcp.run(transport="http", host="0.0.0.0", port=port)
